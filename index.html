@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTE | Terminal Hethereau</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --core: #00f2ff;
+            --ring1: #7000ff;
+            --ring2: #ff007a;
+            --ring3: #39ff14;
+            --dark: #0a0a0c;
+            --card-bg: #16161a;
+            --light: #f4f4f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Orbitron', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--dark); color: var(--light); line-height: 1.6; overflow-x: hidden; }
+
+        /* --- NAVIGATION ERGONOMIQUE --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(0, 0, 0, 0.95);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 2px solid var(--ring1);
+        }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--core); letter-spacing: 2px; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { text-decoration: none; color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--core); text-shadow: 0 0 10px var(--core); }
+
+        /* --- HERO SECTION AVEC GROS COMPTEUR --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(10, 10, 12, 0.7), rgba(10, 10, 12, 0.95)), url('img1.jpg');
+            background-size: cover; background-position: center;
+            padding: 100px 20px; text-align: center;
+        }
+
+        .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); margin-bottom: 30px; letter-spacing: 5px; text-transform: uppercase; }
+
+        /* LE DATA CORE (COMPTEUR) */
+        .data-core {
+            position: relative; width: 350px; height: 350px;
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 40px;
+        }
+        .data-core svg { position: absolute; transform: rotate(-90deg); width: 100%; height: 100%; }
+        .ring { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+        .ring-bg { stroke: rgba(255, 255, 255, 0.05); stroke-width: 8; }
+        
+        .core-info { text-align: center; z-index: 10; }
+        .main-timer { font-size: 3rem; font-weight: 900; color: white; text-shadow: 0 0 20px var(--core); }
+        .sub-data { color: var(--core); font-size: 0.8rem; margin-top: 5px; letter-spacing: 2px; }
+
+        /* --- BOUTONS --- */
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn { 
+            padding: 12px 30px; border-radius: 2px; text-decoration: none; font-weight: bold; 
+            text-transform: uppercase; transition: 0.4s; display: flex; align-items: center; gap: 10px;
+            font-size: 0.8rem; border: 1px solid var(--core); color: var(--core);
+            background: rgba(0, 242, 255, 0.05);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        }
+        .btn:hover { background: var(--core); color: black; box-shadow: 0 0 20px var(--core); transform: scale(1.05); }
+
+        /* --- SECTIONS INFOS --- */
+        section { padding: 80px 10%; }
+        .section-title { font-size: 2rem; margin-bottom: 40px; text-align: center; color: var(--core); text-transform: uppercase; letter-spacing: 3px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: var(--card-bg); padding: 25px; border-radius: 4px; border-left: 4px solid var(--ring1); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); background: #1c1c22; }
+        .card h3 { color: var(--ring2); margin-bottom: 15px; }
+
+        /* --- TABLEAU CONFIG --- */
+        .config-table { width: 100%; border-collapse: collapse; background: var(--card-bg); margin-top: 20px; }
+        .config-table th, .config-table td { padding: 15px; text-align: left; border-bottom: 1px solid #222; font-size: 0.9rem; }
+        .config-table th { background: var(--ring1); color: white; text-transform: uppercase; }
+
+        footer { text-align: center; padding: 60px 10%; background: #050505; border-top: 2px solid var(--ring2); }
+        .footer-banner { width: 100%; max-width: 700px; border-radius: 4px; margin-bottom: 20px; opacity: 0.7; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .data-core { width: 280px; height: 280px; }
+            .main-timer { font-size: 2.2rem; }
+            section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">NTE // SYSTEM</div>
+        <ul class="nav-links">
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#jeu">Le Jeu</a></li>
+            <li><a href="#config">Config</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero" id="accueil">
+        <p style="color: var(--ring3); font-size: 0.7rem; margin-bottom: 10px; letter-spacing: 5px;">[ ACCÈS SERVEUR HETHEREAU AUTORISÉ ]</p>
+        <h1>NEVERNESS TO EVERNESS</h1>
+        
+        <div class="data-core">
+            <svg viewBox="0 0 220 220">
+                <circle class="ring-bg" cx="110" cy="110" r="100"></circle>
+                <circle id="ring-sec" class="ring" cx="110" cy="110" r="100" stroke="var(--ring3)" stroke-dasharray="628" stroke-dashoffset="628"></circle>
+                <circle class="ring-bg" cx="110" cy="110" r="85"></circle>
+                <circle id="ring-min" class="ring" cx="110" cy="110" r="85" stroke="var(--ring2)" stroke-dasharray="534" stroke-dashoffset="534"></circle>
+                <circle class="ring-bg" cx="110" cy="110" r="70"></circle>
+                <circle id="ring-hours" class="ring" cx="110" cy="110" r="70" stroke="var(--ring1)" stroke-dasharray="440" stroke-dashoffset="440"></circle>
+            </svg>
+            <div class="core-info">
+                <div id="big-timer" class="main-timer">00:00</div>
+                <div id="day-counter" class="sub-data">-- JOURS</div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a href="https://store.steampowered.com" target="_blank" class="btn"><i class="fab fa-steam"></i> Steam Wishlist</a>
+            <a href="https://x.com/NTE_Official" target="_blank" class="btn" style="border-color: var(--ring2); color: var(--ring2);"><i class="fab fa-x-twitter"></i> Protocol X</a>
+        </div>
+    </header>
+
+    <section id="jeu">
+        <h2 class="section-title">Analyse des Anomalies</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Monde Ouvert</h3>
+                <p>Une liberté totale dans une métropole surnaturelle. Achetez, conduisez et explorez sans limites.</p>
+            </div>
+            <div class="card">
+                <h3>Système Esper</h3>
+                <p>Maîtrisez des pouvoirs hors du commun pour stabiliser les failles de la réalité.</p>
+            </div>
+            <div class="card" style="border-left-color: var(--ring3);">
+                <h3>Unreal Engine 5</h3>
+                <p>Une expérience PC next-gen avec Ray Tracing et une métropole plus vraie que nature.</p>
+            </div>
+        </div>
+        <div style="margin-top: 50px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+            <img src="img2.jpg" alt="Personnage" style="flex: 1; max-width: 400px; border: 1px solid var(--core); padding: 5px; min-width: 280px;">
+            <p style="flex: 1; min-width: 280px;"><strong>Neverness to Everness (NTE)</strong> est bien plus qu'un jeu d'action. C'est une simulation de vie urbaine où le paranormal s'invite à chaque coin de rue. Préparez-vous à chasser les anomalies dès le 29 avril.</p>
+        </div>
+    </section>
+
+    <section id="config" style="background: #0f0f12;">
+        <h2 class="section-title">Spécifications PC</h2>
+        <table class="config-table">
+            <thead>
+                <tr><th>Composant</th><th>Minimum</th><th>Recommandée</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>CPU</td><td>i5-8400 / Ryzen 5 2600</td><td>i7-10700K / Ryzen 7 5800X</td></tr>
+                <tr><td>GPU</td><td>GTX 1060 (6GB)</td><td>RTX 3070 / RX 6800 XT</td></tr>
+                <tr><td>RAM</td><td>16 Go</td><td>32 Go</td></tr>
+                <tr><td>SSD</td><td>100 Go</td><td>100 Go NVMe</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <img src="img3.jpg" alt="Footer Banner" class="footer-banner">
+        <p>© 2026 HOTTA STUDIO | SORTIE LE 29 AVRIL 2026</p>
+        <div class="btn-group" style="margin-top: 20px;">
+            <a href="#" class="btn" style="font-size: 0.6rem;">Discord</a>
+            <a href="#" class="btn" style="font-size: 0.6rem;">Site Officiel</a>
+        </div>
+    </footer>
+
+    <script>
+        function updateCore() {
+            const launchDate = new Date("April 29, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = launchDate - now;
+
+            if (diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('big-timer').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                document.getElementById('day-counter').innerText = `${d} JOURS : ${h}H`;
+
+                document.getElementById('ring-sec').style.strokeDashoffset = 628 - (s * 628 / 60);
+                document.getElementById('ring-min').style.strokeDashoffset = 534 - (m * 534 / 60);
+                document.getElementById('ring-hours').style.strokeDashoffset = 440 - (h * 440 / 24);
+            }
+        }
+        setInterval(updateCore, 1000);
+        updateCore();
+    </script>
+</body>
+</html>
