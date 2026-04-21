@@ -12,6 +12,7 @@
             --ring1: #7000ff;
             --ring2: #ff007a;
             --ring3: #39ff14;
+            --preload: #ffb300;
             --dark: #0a0a0c;
             --card-bg: #16161a;
             --light: #f4f4f4;
@@ -21,7 +22,7 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--dark); color: var(--light); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- NAVIGATION ERGONOMIQUE --- */
+        /* --- NAVIGATION --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 5%; background: rgba(0, 0, 0, 0.95);
@@ -34,41 +35,88 @@
         .nav-links a { text-decoration: none; color: white; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--core); text-shadow: 0 0 10px var(--core); }
 
-        /* --- HERO SECTION AVEC GROS COMPTEUR --- */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: linear-gradient(rgba(10, 10, 12, 0.7), rgba(10, 10, 12, 0.95)), url('img1.jpg');
+            background: linear-gradient(rgba(10, 10, 12, 0.75), rgba(10, 10, 12, 0.95)), url('Never-to-Everness-release-date-key-visual.jpg');
             background-size: cover; background-position: center;
-            padding: 100px 20px; text-align: center;
+            padding: 120px 20px 60px; text-align: center;
         }
 
-        .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); margin-bottom: 30px; letter-spacing: 5px; text-transform: uppercase; }
+        .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: 5px; text-transform: uppercase; }
+        .hero-subtitle { color: var(--ring3); font-size: 0.7rem; margin-bottom: 40px; letter-spacing: 5px; }
 
-        /* LE DATA CORE (COMPTEUR) */
+        /* --- BLOC COMPTEUR PRINCIPAL --- */
+        .counter-block { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
+        .counter-label {
+            font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 15px;
+            padding: 5px 15px; border: 1px solid currentColor;
+            text-transform: uppercase;
+        }
+        .counter-label.primary { color: var(--core); }
+
+        /* LE DATA CORE (COMPTEUR PRINCIPAL) */
         .data-core {
             position: relative; width: 350px; height: 350px;
             display: flex; justify-content: center; align-items: center;
-            margin-bottom: 40px;
         }
         .data-core svg { position: absolute; transform: rotate(-90deg); width: 100%; height: 100%; }
         .ring { fill: none; stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
         .ring-bg { stroke: rgba(255, 255, 255, 0.05); stroke-width: 8; }
-        
+
         .core-info { text-align: center; z-index: 10; }
         .main-timer { font-size: 3rem; font-weight: 900; color: white; text-shadow: 0 0 20px var(--core); }
         .sub-data { color: var(--core); font-size: 0.8rem; margin-top: 5px; letter-spacing: 2px; }
+
+        /* --- BANDEAU DISCRET PRÉ-CHARGEMENT --- */
+        .preload-bar {
+            display: inline-flex; align-items: center; gap: 15px;
+            padding: 10px 20px;
+            background: rgba(255, 179, 0, 0.05);
+            border: 1px solid rgba(255, 179, 0, 0.4);
+            border-left: 3px solid var(--preload);
+            font-size: 0.75rem; letter-spacing: 2px;
+            margin-bottom: 40px;
+            max-width: 100%;
+        }
+        .preload-bar .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--preload); box-shadow: 0 0 10px var(--preload);
+            animation: pulse 1.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+        .preload-bar .label {
+            color: var(--preload); text-transform: uppercase; font-weight: 700;
+        }
+        .preload-bar .separator { color: rgba(255, 255, 255, 0.2); }
+        .preload-bar .value { color: #fff; font-weight: 700; }
+
+        /* ÉTAT ACTIF / TERMINÉ */
+        .counter-block.expired .main-timer { color: var(--ring3); text-shadow: 0 0 25px var(--ring3); }
+        .counter-block.expired .sub-data { color: var(--ring3); }
+        .preload-bar.expired { border-color: var(--ring3); border-left-color: var(--ring3); background: rgba(57, 255, 20, 0.05); }
+        .preload-bar.expired .dot { background: var(--ring3); box-shadow: 0 0 10px var(--ring3); }
+        .preload-bar.expired .label { color: var(--ring3); }
 
         /* --- BOUTONS --- */
         .btn-group { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
         .btn { 
             padding: 12px 30px; border-radius: 2px; text-decoration: none; font-weight: bold; 
-            text-transform: uppercase; transition: 0.4s; display: flex; align-items: center; gap: 10px;
+            text-transform: uppercase; transition: 0.4s; display: inline-flex; align-items: center; gap: 10px;
             font-size: 0.8rem; border: 1px solid var(--core); color: var(--core);
             background: rgba(0, 242, 255, 0.05);
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         }
         .btn:hover { background: var(--core); color: black; box-shadow: 0 0 20px var(--core); transform: scale(1.05); }
+        .btn.magenta { border-color: var(--ring2); color: var(--ring2); background: rgba(255, 0, 122, 0.05); }
+        .btn.magenta:hover { background: var(--ring2); color: white; box-shadow: 0 0 20px var(--ring2); }
+        .btn.discord { border-color: #5865F2; color: #5865F2; background: rgba(88, 101, 242, 0.05); }
+        .btn.discord:hover { background: #5865F2; color: white; box-shadow: 0 0 20px #5865F2; }
 
         /* --- SECTIONS INFOS --- */
         section { padding: 80px 10%; }
@@ -79,20 +127,58 @@
         .card:hover { transform: translateY(-10px); background: #1c1c22; }
         .card h3 { color: var(--ring2); margin-bottom: 15px; }
 
+        /* --- SECTION PERSONNAGES --- */
+        .character-showcase {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+            margin-top: 40px;
+        }
+        .character-showcase img { width: 100%; border-radius: 4px; border: 1px solid var(--ring2); padding: 4px; }
+        .char-text h3 { color: var(--ring2); font-size: 1.4rem; margin-bottom: 15px; letter-spacing: 2px; }
+        .char-text p { margin-bottom: 15px; }
+        .char-quote {
+            border-left: 3px solid var(--ring2); padding-left: 15px;
+            font-style: italic; color: #ccc; font-size: 0.9rem;
+        }
+        .roster-banner {
+            margin-top: 40px; width: 100%; border-radius: 4px;
+            border: 1px solid var(--ring1);
+        }
+
+        /* --- PARALLAX --- */
+        .parallax {
+            min-height: 400px; background-image: url('slide4.jpg');
+            background-attachment: fixed; background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 60px 20px;
+        }
+        .parallax-text {
+            background: rgba(10, 10, 12, 0.7); padding: 30px; border: 1px solid var(--core);
+            max-width: 700px;
+        }
+        .parallax-text h2 { color: var(--core); letter-spacing: 3px; margin-bottom: 15px; }
+
         /* --- TABLEAU CONFIG --- */
         .config-table { width: 100%; border-collapse: collapse; background: var(--card-bg); margin-top: 20px; }
         .config-table th, .config-table td { padding: 15px; text-align: left; border-bottom: 1px solid #222; font-size: 0.9rem; }
         .config-table th { background: var(--ring1); color: white; text-transform: uppercase; }
 
+        /* --- GAMEPLAY SECTION --- */
+        .gameplay-preview {
+            margin-top: 40px; width: 100%; border-radius: 4px; border: 1px solid var(--core);
+        }
+
         footer { text-align: center; padding: 60px 10%; background: #050505; border-top: 2px solid var(--ring2); }
-        .footer-banner { width: 100%; max-width: 700px; border-radius: 4px; margin-bottom: 20px; opacity: 0.7; }
+        .footer-banner { width: 100%; max-width: 800px; border-radius: 4px; margin-bottom: 20px; opacity: 0.85; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .data-core { width: 280px; height: 280px; }
             .main-timer { font-size: 2.2rem; }
+            .preload-bar { font-size: 0.65rem; padding: 8px 14px; gap: 10px; }
             section { padding: 60px 5%; }
+            .character-showcase { grid-template-columns: 1fr; }
+            .parallax { background-attachment: scroll; }
         }
     </style>
 </head>
@@ -103,32 +189,44 @@
         <ul class="nav-links">
             <li><a href="#accueil">Accueil</a></li>
             <li><a href="#jeu">Le Jeu</a></li>
+            <li><a href="#perso">Personnages</a></li>
             <li><a href="#config">Config</a></li>
         </ul>
     </nav>
 
     <header class="hero" id="accueil">
-        <p style="color: var(--ring3); font-size: 0.7rem; margin-bottom: 10px; letter-spacing: 5px;">[ ACCÈS SERVEUR HETHEREAU AUTORISÉ ]</p>
+        <p class="hero-subtitle">[ ACCÈS SERVEUR HETHEREAU AUTORISÉ ]</p>
         <h1>NEVERNESS TO EVERNESS</h1>
-        
-        <div class="data-core">
-            <svg viewBox="0 0 220 220">
-                <circle class="ring-bg" cx="110" cy="110" r="100"></circle>
-                <circle id="ring-sec" class="ring" cx="110" cy="110" r="100" stroke="var(--ring3)" stroke-dasharray="628" stroke-dashoffset="628"></circle>
-                <circle class="ring-bg" cx="110" cy="110" r="85"></circle>
-                <circle id="ring-min" class="ring" cx="110" cy="110" r="85" stroke="var(--ring2)" stroke-dasharray="534" stroke-dashoffset="534"></circle>
-                <circle class="ring-bg" cx="110" cy="110" r="70"></circle>
-                <circle id="ring-hours" class="ring" cx="110" cy="110" r="70" stroke="var(--ring1)" stroke-dasharray="440" stroke-dashoffset="440"></circle>
-            </svg>
-            <div class="core-info">
-                <div id="big-timer" class="main-timer">00:00</div>
-                <div id="day-counter" class="sub-data">-- JOURS</div>
+
+        <div class="counter-block" id="launch-block">
+            <div class="counter-label primary">// LANCEMENT OFFICIEL &mdash; 29.04</div>
+            <div class="data-core">
+                <svg viewBox="0 0 220 220">
+                    <circle class="ring-bg" cx="110" cy="110" r="100"></circle>
+                    <circle id="ring-sec" class="ring" cx="110" cy="110" r="100" stroke="var(--ring3)" stroke-dasharray="628" stroke-dashoffset="628"></circle>
+                    <circle class="ring-bg" cx="110" cy="110" r="85"></circle>
+                    <circle id="ring-min" class="ring" cx="110" cy="110" r="85" stroke="var(--ring2)" stroke-dasharray="534" stroke-dashoffset="534"></circle>
+                    <circle class="ring-bg" cx="110" cy="110" r="70"></circle>
+                    <circle id="ring-hours" class="ring" cx="110" cy="110" r="70" stroke="var(--ring1)" stroke-dasharray="440" stroke-dashoffset="440"></circle>
+                </svg>
+                <div class="core-info">
+                    <div id="big-timer" class="main-timer">00:00</div>
+                    <div id="day-counter" class="sub-data">-- JOURS</div>
+                </div>
             </div>
         </div>
 
+        <div class="preload-bar" id="preload-bar">
+            <span class="dot"></span>
+            <span class="label">Pré-chargement 27.04</span>
+            <span class="separator">//</span>
+            <span class="value" id="preload-value">-- J : --H : --M : --S</span>
+        </div>
+
         <div class="btn-group">
-            <a href="https://store.steampowered.com" target="_blank" class="btn"><i class="fab fa-steam"></i> Steam Wishlist</a>
-            <a href="https://x.com/NTE_Official" target="_blank" class="btn" style="border-color: var(--ring2); color: var(--ring2);"><i class="fab fa-x-twitter"></i> Protocol X</a>
+            <a href="https://nte.perfectworld.com/fr/" target="_blank" rel="noopener" class="btn"><i class="fas fa-globe"></i> Site Officiel</a>
+            <a href="https://x.com/intent/user?screen_name=NTE_GL&utm=officialEN" target="_blank" rel="noopener" class="btn magenta"><i class="fab fa-x-twitter"></i> Protocol X</a>
+            <a href="#" target="_blank" rel="noopener" class="btn discord"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </header>
 
@@ -148,10 +246,30 @@
                 <p>Une expérience PC next-gen avec Ray Tracing et une métropole plus vraie que nature.</p>
             </div>
         </div>
-        <div style="margin-top: 50px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
-            <img src="img2.jpg" alt="Personnage" style="flex: 1; max-width: 400px; border: 1px solid var(--core); padding: 5px; min-width: 280px;">
-            <p style="flex: 1; min-width: 280px;"><strong>Neverness to Everness (NTE)</strong> est bien plus qu'un jeu d'action. C'est une simulation de vie urbaine où le paranormal s'invite à chaque coin de rue. Préparez-vous à chasser les anomalies dès le 29 avril.</p>
+        <img src="hq720 (1).jpg" alt="Aperçu gameplay NTE" class="gameplay-preview">
+        <p style="margin-top: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <strong>Neverness to Everness (NTE)</strong> est bien plus qu'un jeu d'action. C'est une simulation de vie urbaine où le paranormal s'invite à chaque coin de rue. Préparez-vous à chasser les anomalies dès le 29 avril.
+        </p>
+    </section>
+
+    <div class="parallax">
+        <div class="parallax-text">
+            <h2>SOUS UN CIEL DE COMÈTES</h2>
+            <p>Entre Hethereau et les champs silencieux, chaque nuit cache un fragment d'Everness à découvrir.</p>
         </div>
+    </div>
+
+    <section id="perso">
+        <h2 class="section-title">Dossier Personnages</h2>
+        <div class="character-showcase">
+            <img src="【EN】娜娜莉.jpg" alt="Nanally - NTE">
+            <div class="char-text">
+                <h3>NANALLY // COLUCCIS</h3>
+                <p>Membre du trio "Coluccis", Nanally mélange insolence féline et force brute. Son style reflète l'esthétique décalée du quartier Silvermine.</p>
+                <p class="char-quote">"Ta-da — The righteous 'Coluccis' trio is here, ready to strike and nullify the evil!"</p>
+            </div>
+        </div>
+        <img src="hq720.jpg" alt="Roster des personnages NTE" class="roster-banner">
     </section>
 
     <section id="config" style="background: #0f0f12;">
@@ -170,36 +288,76 @@
     </section>
 
     <footer>
-        <img src="img3.jpg" alt="Footer Banner" class="footer-banner">
-        <p>© 2026 HOTTA STUDIO | SORTIE LE 29 AVRIL 2026</p>
+        <img src="neverness-to-everness-new-year.jpg" alt="Footer Banner" class="footer-banner">
+        <p>© 2026 HOTTA STUDIO | PRÉ-CHARGEMENT 27 AVRIL &mdash; SORTIE 29 AVRIL 2026</p>
         <div class="btn-group" style="margin-top: 20px;">
-            <a href="#" class="btn" style="font-size: 0.6rem;">Discord</a>
-            <a href="#" class="btn" style="font-size: 0.6rem;">Site Officiel</a>
+            <a href="https://nte.perfectworld.com/fr/" target="_blank" rel="noopener" class="btn" style="font-size: 0.6rem;">Site Officiel</a>
+            <a href="https://x.com/intent/user?screen_name=NTE_GL&utm=officialEN" target="_blank" rel="noopener" class="btn magenta" style="font-size: 0.6rem;">X / Twitter</a>
+            <a href="#" target="_blank" rel="noopener" class="btn discord" style="font-size: 0.6rem;">Discord</a>
         </div>
     </footer>
 
     <script>
-        function updateCore() {
-            const launchDate = new Date("April 29, 2026 00:00:00").getTime();
+        // --- CONFIGURATION DES DATES ---
+        const preloadDate = new Date("April 27, 2026 00:00:00").getTime();
+        const launchDate  = new Date("April 29, 2026 00:00:00").getTime();
+
+        function pad(n) { return n < 10 ? '0' + n : n; }
+
+        function updateLaunchCore() {
             const now = new Date().getTime();
             const diff = launchDate - now;
+            const block = document.getElementById('launch-block');
 
             if (diff > 0) {
+                block.classList.remove('expired');
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-                document.getElementById('big-timer').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                document.getElementById('big-timer').innerText  = `${pad(m)}:${pad(s)}`;
                 document.getElementById('day-counter').innerText = `${d} JOURS : ${h}H`;
 
-                document.getElementById('ring-sec').style.strokeDashoffset = 628 - (s * 628 / 60);
-                document.getElementById('ring-min').style.strokeDashoffset = 534 - (m * 534 / 60);
+                document.getElementById('ring-sec').style.strokeDashoffset   = 628 - (s * 628 / 60);
+                document.getElementById('ring-min').style.strokeDashoffset   = 534 - (m * 534 / 60);
                 document.getElementById('ring-hours').style.strokeDashoffset = 440 - (h * 440 / 24);
+            } else {
+                block.classList.add('expired');
+                document.getElementById('big-timer').innerText  = 'ONLINE';
+                document.getElementById('day-counter').innerText = 'ACCÈS OUVERT';
+                document.getElementById('ring-sec').style.strokeDashoffset   = 0;
+                document.getElementById('ring-min').style.strokeDashoffset   = 0;
+                document.getElementById('ring-hours').style.strokeDashoffset = 0;
             }
         }
-        setInterval(updateCore, 1000);
-        updateCore();
+
+        function updatePreloadBar() {
+            const now = new Date().getTime();
+            const diff = preloadDate - now;
+            const bar = document.getElementById('preload-bar');
+            const value = document.getElementById('preload-value');
+
+            if (diff > 0) {
+                bar.classList.remove('expired');
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                value.innerText = `${d}J : ${pad(h)}H : ${pad(m)}M : ${pad(s)}S`;
+            } else {
+                bar.classList.add('expired');
+                value.innerText = 'DISPONIBLE';
+            }
+        }
+
+        function updateAll() {
+            updateLaunchCore();
+            updatePreloadBar();
+        }
+
+        setInterval(updateAll, 1000);
+        updateAll();
     </script>
 </body>
 </html>
